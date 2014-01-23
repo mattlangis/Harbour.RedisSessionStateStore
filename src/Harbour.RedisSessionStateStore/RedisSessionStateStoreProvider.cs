@@ -121,8 +121,9 @@ namespace Harbour.RedisSessionStateStore
                 {
                     var host = config["host"];
                     var clientType = config["clientType"];
+                    var initialDb = config["initialDb"];
 
-                    this.clientManager = this.CreateClientManager(clientType, host);
+                    this.clientManager = this.CreateClientManager(clientType, host, Convert.ToInt32(initialDb));
                     this.manageClientManagerLifetime = false;
                 }
                 else
@@ -135,7 +136,7 @@ namespace Harbour.RedisSessionStateStore
             base.Initialize(name, config);
         }
 
-        private IRedisClientsManager CreateClientManager(string clientType, string host)
+        private IRedisClientsManager CreateClientManager(string clientType, string host, int initialDb)
         {
             if (String.IsNullOrWhiteSpace(host))
             {
@@ -149,12 +150,10 @@ namespace Harbour.RedisSessionStateStore
 
             if (clientType.ToUpper() == "POOLED")
             {
-                return new PooledRedisClientManager(host);
+                return new PooledRedisClientManager(initialDb, host);
             }
-            else
-            {
-                return new BasicRedisClientManager(host);
-            }
+
+            return new BasicRedisClientManager(initialDb, host);
         }
 
         private string GetSessionIdKey(string id)

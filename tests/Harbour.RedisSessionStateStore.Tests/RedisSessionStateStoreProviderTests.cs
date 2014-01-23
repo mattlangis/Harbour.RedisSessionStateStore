@@ -34,9 +34,11 @@ namespace Harbour.RedisSessionStateStore.Tests
             provider.Initialize("APP_NAME", new NameValueCollection()
             {
                 { "Host", "9.9.9.9:999" },
-                { "clientType", "pooled" }
+                { "clientType", "pooled" },
+                { "initialDb", "1"}
             });
             Assert.IsType<PooledRedisClientManager>(provider.ClientManager);
+            Assert.Equal(1, provider.ClientManager.GetClient().Db);
         }
 
         [Fact]
@@ -502,9 +504,9 @@ namespace Harbour.RedisSessionStateStore.Tests
             provider.Initialize(KeyName, new NameValueCollection()
             {
                 { "Host", host ?? this.Host },
-                { "clientType", "basic" }
+                { "clientType", "basic" },
+                { "initialDB", "0" }
             });
-
             return provider;
         }
     }

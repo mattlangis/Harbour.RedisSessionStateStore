@@ -505,7 +505,7 @@ namespace Harbour.RedisSessionStateStore.Tests
             {
                 { "Host", host ?? this.Host },
                 { "clientType", "basic" },
-                { "initialDB", "0" }
+                { "initialDb", "0" }
             });
             return provider;
         }

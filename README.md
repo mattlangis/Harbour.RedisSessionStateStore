@@ -1,3 +1,8 @@
+mattlangis: This is a slighly modified version of TheCloudlessSky/Harbour.RedisSessionStateStore.
+- Added support for initialDb in .config file.
+
+
+
 Harbour.RedisSessionStateStore
 ==============================
 
